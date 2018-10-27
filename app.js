@@ -1,10 +1,14 @@
 const express = require("express");
+const Router = require("./routes/oauth-routes");
 
 //creating app
 const app = express();
 
 // set view engine
 app.set("view engine", "ejs");
+
+// set up routes
+app.use("/auth", Router);
 
 // create home route
 app.get("/", (req, res) => {
