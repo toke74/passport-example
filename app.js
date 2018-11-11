@@ -1,16 +1,23 @@
 const express = require("express");
 const CookieSession = require("cookie-session");
 const passport = require("passport");
-const Router = require("./routes/oauth-routes");
-const passportSetup = require("./passport/passport-setup");
-const keys = require("./config/keys");
+const bodyParse = require("body-parser");
 const mongoose = require("mongoose");
+
+const Router = require("./routes/oauth-routes");
+const keys = require("./config/keys");
 const profileRoute = require("./routes/profile-routes");
+require("./passport/passport-setup");
+
 //creating app
 const app = express();
 
 // set view engine
 app.set("view engine", "ejs");
+
+//body parser middleware
+app.use(bodyParse.urlencoded({ extended: false }));
+app.use(bodyParse.json());
 
 //set up session cookies
 app.use(
@@ -36,6 +43,7 @@ mongoose.connect(
 // set up routes
 app.use("/auth", Router);
 app.use("/profile", profileRoute);
+
 // create home route
 app.get("/", (req, res) => {
   res.render("home", { user: req.user });
