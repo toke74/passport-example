@@ -41,7 +41,7 @@ mongoose.connect(
 );
 
 // set up routes
-app.use("/auth", Router);
+app.use(Router);
 app.use("/profile", profileRoute);
 
 // create home route
